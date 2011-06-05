@@ -7,7 +7,8 @@ public class breathalyzer {
 
 	private static final String acceptedWordListFileName = "/var/tmp/twl06.txt";
 
-	private static String[] acceptedWords;
+	private String[] words;
+	private String[] acceptedWords;
 
 	/**
 	 * @param args
@@ -17,17 +18,25 @@ public class breathalyzer {
 			System.out.println("Missing argument");
 			System.exit(1);
 		}
-		try {
-			acceptedWords = getAcceptedWords();
-			String fileName = args[0];
-			int total = getTotalEditDistance(fileName);
-			System.out.println(total);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		breathalyzer b = new breathalyzer(args[0]);
+		int total = b.getTotalEditDistance();
+		System.out.println(total);
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param fileName
+	 */
+	public breathalyzer(String fileName) {
+		try {
+			words = getWords(fileName);
+			acceptedWords = getAcceptedWords();
+		} catch (FileNotFoundException e) {
+			System.out.println("Could not find file");
+		}
+	}
+	
 	/**
 	 * Get the total edit distance
 	 * 
@@ -35,22 +44,41 @@ public class breathalyzer {
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public static int getTotalEditDistance(String fileName) throws FileNotFoundException {
+	public int getTotalEditDistance() {
 		int total = 0;
-		File file = new File(fileName);
-		Scanner scanner = new Scanner(file);
-		while (scanner.hasNext()) {
-			String line = scanner.next();
+		for (String line : words) {
 			int wordScore = 100;
 			for (String word : acceptedWords) {
-				int i = LD(line, word);
-				wordScore = Math.min(wordScore, i);
-				if (wordScore == 0)
+				if (line.equalsIgnoreCase(word)) {
+					wordScore = 0;
+				} else {
+					int i = LD(line, word);
+					wordScore = Math.min(wordScore, i);
+				}
+				if (wordScore == 0) {
 					break;
+				}
 			}
 			total += wordScore;
 		}
 		return total;
+	}
+	
+	/**
+	 * Get the words list
+	 * 
+	 * @return String[]
+	 * @throws FileNotFoundException
+	 */
+	public String[] getWords(String fileName) throws FileNotFoundException {
+		LinkedList<String> wordList = new LinkedList<String>();
+		File file = new File(fileName);
+		Scanner scanner = new Scanner(file);
+		while (scanner.hasNext()) {
+			wordList.add(scanner.next().toLowerCase());
+		}
+		words = new String[wordList.size()];
+		return wordList.toArray(words);
 	}
 	
 	/**
@@ -59,7 +87,7 @@ public class breathalyzer {
 	 * @return String[]
 	 * @throws FileNotFoundException
 	 */
-	public static String[] getAcceptedWords() throws FileNotFoundException {
+	private String[] getAcceptedWords() throws FileNotFoundException {
 		LinkedList<String> wordList = new LinkedList<String>();
 		File file = new File(acceptedWordListFileName);
 		Scanner scanner = new Scanner(file);
