@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class breathalyzer {
 
-	private static final String acceptedWordListFileName = "/var/tmp/twl06.txt";
+	private static final String acceptedWordListFileName = "./src/twl06.txt"; // needs to be /var/tmp/twl06.txt for submission
 
 	private String[] words;
 	private String[] acceptedWords;
