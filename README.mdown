@@ -2,3 +2,5 @@ Facebook Engineering Puzzle - Breathalyzer
 ------------------------------------------
 
 A basic working solution with tests for the Facebook Engineering puzzle, Breathalyzer
+
+All test cases pass but on submission the Facebook robot says there are problems. I'm assuming it's too slow.
