@@ -25,7 +25,7 @@ public class breathalyzer {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param fileName
 	 */
 	public breathalyzer(String fileName) {
@@ -36,10 +36,10 @@ public class breathalyzer {
 			System.out.println("Could not find file");
 		}
 	}
-	
+
 	/**
 	 * Get the total edit distance
-	 * 
+	 *
 	 * @param fileName
 	 * @return
 	 * @throws FileNotFoundException
@@ -63,10 +63,10 @@ public class breathalyzer {
 		}
 		return total;
 	}
-	
+
 	/**
 	 * Get the words list
-	 * 
+	 *
 	 * @return String[]
 	 * @throws FileNotFoundException
 	 */
@@ -80,10 +80,10 @@ public class breathalyzer {
 		words = new String[wordList.size()];
 		return wordList.toArray(words);
 	}
-	
+
 	/**
 	 * Get the accepted words list
-	 * 
+	 *
 	 * @return String[]
 	 * @throws FileNotFoundException
 	 */
@@ -100,7 +100,7 @@ public class breathalyzer {
 
 	/**
 	 * Calculate minimum from three ints
-	 * 
+	 *
 	 * @param a
 	 * @param b
 	 * @param c
@@ -120,7 +120,7 @@ public class breathalyzer {
 
 	/**
 	 * Get the Levenshtein Distance
-	 * 
+	 *
 	 * @param s
 	 * @param t
 	 * @return
